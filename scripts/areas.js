@@ -1,4 +1,6 @@
-// Create all the areas
+var ui = this.global.uiLib;
+
+/* Create all the areas */
 
 // To the right of the wave info / mobile buttons
 ui.addArea("buttons", {
@@ -26,9 +28,8 @@ ui.addArea("top", {
 	},
 	post(top) {},
 	added(table) {
-		print("First: " + this.first)
 		if (this.first) {
-			// avoid some clutter on screen
+			// avoid some clutter on the screen
 			ui.addButton("top-visibility", Icon.rightOpen, button => this.toggle(button));
 			this.first = false;
 		}

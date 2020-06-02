@@ -2,7 +2,7 @@ if (this.global.uiLib) {
 	module.exports = this.global.uiLib;
 } else {
 
-const ui = {
+var ui = {
 	// functions to be called when atlas is ready
 	loadEvents: [],
 	areas: {},
@@ -64,7 +64,7 @@ ui.addArea = function(name, area) {
 ui.addTable = function(area, name, user) {
 	ui.onLoad(() => {
 		const root = ui.areas[area].table;
-		const table = new Table(Tex.buttonTrans);
+		const table = new Table();
 		root.add(table).name(name);
 		root.row();
 		if (ui.areas[area].added) ui.areas[area].added(table);
