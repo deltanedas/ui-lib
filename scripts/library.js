@@ -41,10 +41,8 @@ ui.getIcon = (icon) => {
 		Called when the button is clicked. */
 ui.addButton = (name, icon, clicked) => {
 	ui.loadEvents.push(() => {
-		print("Icon was " + icon);
 		icon = ui.getIcon(icon);
-		print("Icon is " + icon);
-		const cell = ui.tables.buttons.addImageButton(icon, Styles.clearTransi, ui.emptyRun);
+		const cell = ui.tables.buttons.addImageButton(icon, Styles.clearTransi, 47.2, ui.emptyRun);
 		cell.name(name);
 		const button = cell.get();
 		button.clicked(run(() => clicked(button)));
