@@ -1,29 +1,31 @@
 require("ui-lib/library");
 
-const buttons = require("buttons");
+require("areas");
 
 // Run events to add UI and stuff when assets load
 Events.on(EventType.ClientLoadEvent, run(() => {
 	var ui = this.global.uiLib;
 
-	// load the root tables
-	buttons();
+	var table;
+	for (var i in ui.areas) {
+		table = new Table();
+		table.setFillParent(true);
+		ui.areas[i].table = table;
+		ui.areas[i].init(table);
+	}
 
 	const events = ui.loadEvents;
+	ui.loaded = true;
 	for (var i in events) {
 		events[i]();
 	}
 
-	// Add the UI elements to the screen
-	var table;
-	for (var i in ui.tables) {
-		table = ui.tables[i];
-		table.visible(boolp(() => !Vars.state.is(GameState.State.menu)));
-		// Edges
-		const count = table.cells.size;
-		table.addImage().color(Pal.gray).width(4).fillY();
-		table.row();
-		table.addImage().color(Pal.gray).height(4).width(47.2 * count + 4).top();
-		Vars.ui.hudGroup.addChild(table);
+	// Add the UI elements to the HUD
+	var area;
+	for (var i in ui.areas) {
+		area = ui.areas[i];
+		area.table.visible(boolp(() => !Vars.state.is(GameState.State.menu)));
+		area.post(area.table);
+		Vars.ui.hudGroup.addChild(area.table);
 	}
 }));
