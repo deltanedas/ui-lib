@@ -8,7 +8,7 @@ ui.addArea("buttons", {
 		// 5 buttons in vanilla mobile, same width as the wave fragment
 		// float HudFragment#dsize = 47.2f;
 		buttons.top().left().marginLeft(47.2 * 5 + 4);
-		buttons.defaults().size(47.2).top().left();
+		buttons.defaults().size(47.2).left();
 	},
 
 	post(buttons) {
