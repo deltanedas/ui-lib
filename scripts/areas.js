@@ -44,3 +44,11 @@ ui.addArea("top", {
 	first: true,
 	shown: true
 });
+
+ui.addArea("side", {
+	init(side) {
+		side.center().left().marginLeft(8);
+		side.defaults().center().left();
+	},
+	post(side) {}
+});
