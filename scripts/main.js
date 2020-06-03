@@ -20,6 +20,8 @@ function loaded() {
 	for (var i in events) {
 		events[i]();
 	}
+	// Don't call events multiple times when mods reload
+	ui.loadEvents = [];
 
 	// Add the UI elements to the HUD
 	var area;
