@@ -23,7 +23,7 @@ ui.addArea("buttons", {
 // Under the FPS counter.
 ui.addArea("top", {
 	init(top) {
-		top.top().left().marginTop(47.2 + 32).marginLeft(47.2 * 5 + 16);
+		top.top().left().marginTop(47.2 + 54).marginLeft(47.2 * 5 + 16);
 		top.defaults().top().left();
 	},
 	post(top) {},
