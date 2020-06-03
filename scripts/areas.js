@@ -35,6 +35,11 @@ ui.addArea("top", {
 		}
 		table.visible(boolp(() => this.shown));
 	},
+	reloaded() {
+		// Don't add dupe buttons
+		this.first = false;
+		this.shown = true;
+	},
 
 	toggle(button) {
 		button.style.imageUp = this.shown ? Icon.leftOpen : Icon.rightOpen

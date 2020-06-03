@@ -2,10 +2,10 @@ require("ui-lib/library");
 
 require("areas");
 
-// Run events to add UI and stuff when assets load
-Events.on(EventType.ClientLoadEvent, run(() => {
-	var ui = this.global.uiLib;
+var ui = this.global.uiLib;
 
+// Run events to add UI and stuff when assets are ready
+function loaded() {
 	var table;
 	for (var i in ui.areas) {
 		table = new Table();
@@ -16,6 +16,7 @@ Events.on(EventType.ClientLoadEvent, run(() => {
 
 	const events = ui.loadEvents;
 	ui.loaded = true;
+	print("Set load to " + ui.loaded);
 	for (var i in events) {
 		events[i]();
 	}
@@ -28,4 +29,24 @@ Events.on(EventType.ClientLoadEvent, run(() => {
 		area.post(area.table);
 		Vars.ui.hudGroup.addChild(area.table);
 	}
-}));
+}
+
+// UI is always loaded when reloading
+if (Vars.ui.hudGroup) {
+	loaded();
+} else {
+	Events.on(EventType.ClientLoadEvent, run(() => {
+		// Only hook the event once
+		Events.on(EventType.ContentReloadEvent, run(() => {
+			// Clear any old elements when reloading
+			var area;
+			for (var i in ui.areas) {
+				area = ui.areas[i];
+				area.table.clear();
+				if (area.reloaded) area.reloaded();
+			}
+		}));
+
+		loaded();
+	}));
+}

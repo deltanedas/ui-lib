@@ -21,10 +21,10 @@ ui.onLoad = function(func) {
 	}
 }
 
-ui.getIcon = (icon) => {
+ui.getIcon = function(icon) {
 	// "admin" / "error"
 	if (typeof(icon) == "string") {
-		icon = Icon[icon] || Tex[icon] || Core.atlas.find(icon);
+		icon = Icon[icon] || Core.atlas.find(icon);
 	}
 	// Blocks.duo
 	if (icon instanceof UnlockableContent) {
@@ -36,7 +36,7 @@ ui.getIcon = (icon) => {
 	}
 	// Hopefully its a Drawable by now
 	return icon;
-};
+}
 
 /* Area is an object with these functions:
 	init(Table):
@@ -46,7 +46,10 @@ ui.getIcon = (icon) => {
 		Called after all loadEvents but before the area is added to the HUD.
 		Argument is a shortcut for this.table.
 	added(Table): (Optional)
-		Called when a new table is added by ui.addTable. */
+		Called when a new table is added by ui.addTable.
+	reloaded(): (Optional)
+		Called when reloading mods.
+		Elements are cleared automatically. */
 ui.addArea = function(name, area) {
 	ui.areas[name] = area;
 }
