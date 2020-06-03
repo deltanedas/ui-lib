@@ -33,22 +33,15 @@ function loaded() {
 	}
 }
 
-// UI is always loaded when reloading
-if (Vars.ui.hudGroup) {
-	loaded();
-} else {
-	Events.on(EventType.ClientLoadEvent, run(() => {
-		// Only hook the event once
-		Events.on(EventType.ContentReloadEvent, run(() => {
-			// Clear any old elements when reloading
-			var area;
-			for (var i in ui.areas) {
-				area = ui.areas[i];
-				area.table.clear();
-				if (area.reloaded) area.reloaded();
-			}
-		}));
-
-		loaded();
+ui.once(() => {
+	// Only hook the reload event once
+	Events.on(EventType.ContentReloadEvent, run(() => {
+		// Clear any old elements when reloading
+		var area;
+		for (var i in ui.areas) {
+			area = ui.areas[i];
+			area.table.clear();
+			if (area.reloaded) area.reloaded();
+		}
 	}));
-}
+}, loaded);

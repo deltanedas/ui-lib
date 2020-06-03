@@ -13,12 +13,35 @@ var ui = {
 
 /* UTILITY FUNCTIONS */
 
+/* Run a function when the client loads, or now if it already has. */
 ui.onLoad = function(func) {
 	if (ui.loaded) {
 		func();
 	} else {
 		ui.loadEvents.push(func);
 	}
+}
+
+/* Run a function once.
+	Useful for hooking events.
+	loading: (Optional)
+		Called only when the client hasn't loaded yet.
+	loaded: (Optional)
+		Called every time.
+
+	Returns whether the client has already loaded. */
+ui.once = function(loading, loaded) {
+	// Client has already loaded, mods reloaded and/or just installed now.
+	if (Vars.ui.hudGroup) {
+		if (loaded) loaded();
+		return false;
+	}
+
+	Events.on(EventType.ClientLoadEvent, run(() => {
+		if (loading) loading();
+		if (loaded) loaded();
+	}));
+	return true;
 }
 
 ui.getIcon = function(icon) {
