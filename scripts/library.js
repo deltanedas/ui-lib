@@ -45,9 +45,9 @@ ui.once = function(loading, loaded) {
 }
 
 ui.getIcon = function(icon) {
-	// "admin" / "error"
+	// "error"
 	if (typeof(icon) == "string") {
-		icon = Icon[icon] || Core.atlas.find(icon);
+		icon = Core.atlas.find(icon);
 	}
 	// Blocks.duo
 	if (icon instanceof UnlockableContent) {
