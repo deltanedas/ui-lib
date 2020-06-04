@@ -12,11 +12,16 @@ ui.addArea("buttons", {
 	},
 
 	post(buttons) {
-		// Edges around buttons TODO: fix right buttons moving away from bottom edge
+		// Edges around buttons
 		const count = buttons.cells.size;
+		if (count == 0) return;
+
 		buttons.addImage().color(Pal.gray).width(4).fillY();
 		buttons.row();
-		buttons.addImage().color(Pal.gray).height(4).width(47.2 * count + 4).top();
+		// Position it after the first button because it gets "caught" on the second
+		const bottom = new Table().marginLeft(47.2 * count - 43.2).top();
+		bottom.addImage().color(Pal.gray).height(4).width(47.2 * count + 4).right();
+		buttons.add(bottom);
 	}
 });
 
