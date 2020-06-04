@@ -16,7 +16,6 @@ function loaded() {
 
 	const events = ui.loadEvents;
 	ui.loaded = true;
-	print("Set load to " + ui.loaded);
 	for (var i in events) {
 		events[i]();
 	}
