@@ -39,7 +39,7 @@ ui.once(() => {
 		var area;
 		for (var i in ui.areas) {
 			area = ui.areas[i];
-			area.table.clear();
+			area.table.clearChildren();
 			if (area.reloaded) area.reloaded();
 		}
 	}));
