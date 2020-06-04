@@ -45,9 +45,17 @@ ui.once = function(loading, loaded) {
 }
 
 ui.getIcon = function(icon) {
-	// "error"
+	// () => Icon.leftSmall
+	if (typeof(icon) == "function") {
+		icon = icon();
+	}
+	// "admin" / "error"
 	if (typeof(icon) == "string") {
-		icon = Core.atlas.find(icon);
+		try {
+			icon = Icon[icon]
+		} catch (e) {
+			icon = Core.atlas.find(icon);
+		}
 	}
 	// Blocks.duo
 	if (icon instanceof UnlockableContent) {
