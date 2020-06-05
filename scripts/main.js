@@ -10,6 +10,7 @@ function loaded() {
 	for (var i in ui.areas) {
 		table = new Table();
 		table.setFillParent(true);
+		table.visible(boolp(() => Vars.ui.hudfrag.shown()));
 		ui.areas[i].table = table;
 		ui.areas[i].init(table);
 	}
@@ -26,7 +27,6 @@ function loaded() {
 	var area;
 	for (var i in ui.areas) {
 		area = ui.areas[i];
-		area.table.visible(boolp(() => !Vars.state.is(GameState.State.menu)));
 		area.post(area.table);
 		Vars.ui.hudGroup.addChild(area.table);
 	}
