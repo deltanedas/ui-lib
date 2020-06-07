@@ -23,11 +23,14 @@ function loaded() {
 	// Don't call events multiple times when mods reload
 	ui.loadEvents = [];
 
-	// Add the UI elements to the HUD
 	var area;
 	for (var i in ui.areas) {
 		area = ui.areas[i];
+		// Sort the cells by name
+		area.table.cells.sortComparing(func(cell => cell.get().name));
+
 		area.post(area.table);
+		// Add the UI elements to the HUD
 		Vars.ui.hudGroup.addChild(area.table);
 	}
 }

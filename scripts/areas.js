@@ -35,30 +35,57 @@ ui.addArea("top", {
 	added(table) {
 		if (this.first) {
 			// avoid some clutter on the screen
-			ui.addButton("top-visibility", Icon.rightOpen, button => this.toggle(button));
+			ui.addButton("!!!top-visibility", Icon.upOpen, button => this.toggle(button));
 			this.first = false;
 		}
 		table.visible(boolp(() => this.shown));
 	},
 	reloaded() {
 		// Don't add dupe buttons
-		this.first = false;
-		this.shown = true;
+		this.first = this.shown = false;
+	},
+
+	toggle(button) {
+		button.style.imageUp = this.shown ? Icon.upOpen : Icon.downOpen
+		this.shown = !this.shown;
+	},
+
+	first: true,
+	shown: false
+});
+
+ui.addArea("side", {
+	init(side) {
+		const base = Vars.mobile ? 47.2 * 2 : 47.2;
+		const mtop = base + 130 + 8;
+		side.top().left().marginTop(mtop).marginLeft(8);
+		side.defaults().top().left();
+	},
+	post(side) {},
+	added(table) {
+		if (this.first) {
+			// avoid some clutter on the screen
+			ui.addButton("!!!side-visibility", Icon.leftOpen, button => this.toggle(button));
+			this.first = false;
+		}
+		table.visible(boolp(() => this.shown));
+	},
+	reloaded() {
+		// Don't add dupe buttons
+		this.first = this.shown = false;
 	},
 
 	toggle(button) {
 		button.style.imageUp = this.shown ? Icon.leftOpen : Icon.rightOpen
 		this.shown = !this.shown;
 	},
-
 	first: true,
-	shown: true
+	shown: false
 });
 
-ui.addArea("side", {
-	init(side) {
-		side.center().left().marginLeft(8);
-		side.defaults().center().left();
+ui.addArea("bottom", {
+	init(bottom) {
+		bottom.bottom().left();
 	},
-	post(side) {}
+	post() {}
 });
