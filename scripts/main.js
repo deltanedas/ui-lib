@@ -4,6 +4,8 @@ require("areas");
 
 var ui = this.global.uiLib;
 
+require("effects");
+
 // Run events to add UI and stuff when assets are ready
 function loaded() {
 	var table;
@@ -45,5 +47,7 @@ ui.once(() => {
 			area.table.clearChildren();
 			if (area.reloaded) area.reloaded();
 		}
+
+		ui.effects = [];
 	}));
 }, loaded);

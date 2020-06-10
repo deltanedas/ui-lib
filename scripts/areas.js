@@ -89,3 +89,9 @@ ui.addArea("bottom", {
 	},
 	post() {}
 });
+
+// Custom drawing functions
+ui.addArea("effects", {
+	init() {},
+	post() {}
+});

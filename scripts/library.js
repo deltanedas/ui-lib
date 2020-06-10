@@ -3,9 +3,11 @@ if (this.global.uiLib) {
 } else {
 
 var ui = {
-	// functions to be called when atlas is ready
+	// Functions to be called when atlas is ready
 	loadEvents: [],
 	areas: {},
+	// Custom drawing functions
+	effects: [],
 	emptyRun: run(() => {}),
 	// if the loadEvents have started processing
 	loaded: false
@@ -14,7 +16,7 @@ var ui = {
 /* UTILITY FUNCTIONS */
 
 /* Run a function when the client loads, or now if it already has. */
-ui.onLoad = function(func) {
+ui.onLoad = (func) => {
 	if (ui.loaded) {
 		func();
 	} else {
@@ -30,7 +32,7 @@ ui.onLoad = function(func) {
 		Called every time.
 
 	Returns whether the client has already loaded. */
-ui.once = function(loading, loaded) {
+ui.once = (loading, loaded) => {
 	// Client has already loaded, mods reloaded and/or just installed now.
 	if (Vars.ui.hudGroup) {
 		if (loaded) loaded();
@@ -42,9 +44,9 @@ ui.once = function(loading, loaded) {
 		if (loaded) loaded();
 	}));
 	return true;
-}
+};
 
-ui.getIcon = function(icon) {
+ui.getIcon = (icon) => {
 	// () => Icon.leftSmall
 	if (typeof(icon) == "function") {
 		icon = icon();
@@ -67,7 +69,7 @@ ui.getIcon = function(icon) {
 	}
 	// Hopefully its a Drawable by now
 	return icon;
-}
+};
 
 /* Area is an object with these functions:
 	init(Table):
@@ -81,9 +83,9 @@ ui.getIcon = function(icon) {
 	reloaded(): (Optional)
 		Called when reloading mods.
 		Elements are cleared automatically. */
-ui.addArea = function(name, area) {
+ui.addArea = (name, area) => {
 	ui.areas[name] = area;
-}
+};
 
 /* UI FUNCTIONS */
 
@@ -95,7 +97,7 @@ ui.addArea = function(name, area) {
 		Name of the table, used for sorting.
 	function(Table) user:
 		Called when the table is created. */
-ui.addTable = function(area, name, user) {
+ui.addTable = (area, name, user) => {
 	ui.onLoad(() => {
 		const root = ui.areas[area].table;
 		const table = new Table();
@@ -104,7 +106,7 @@ ui.addTable = function(area, name, user) {
 		if (ui.areas[area].added) ui.areas[area].added(table);
 		user(table);
 	});
-}
+};
 
 /* Add a button to the top left.
 	String name:
@@ -114,7 +116,7 @@ ui.addTable = function(area, name, user) {
 		Use Icon.xxx, a TextureRegion, UnlockableContent or String.
 	function(ImageButton) clicked:
 		Called when the button is clicked.
-	function(ImageButton) user: (Optional)
+	function(Cell) user: (Optional)
 		Called when the button is created. */
 ui.addButton = (name, icon, clicked, user) => {
 	ui.onLoad(() => {
@@ -125,6 +127,16 @@ ui.addButton = (name, icon, clicked, user) => {
 		button.clicked(run(() => clicked(button)));
 		if (user) user(cell);
 	});
+};
+
+/* Add a custom drawing functiom.
+	function(int w, int h) effect:
+		Called every frame like a block's draw().
+		Coordinates are in screen space, not world space.
+		Textures are drawn at block scale.
+		For convenience, w and h are the screen width and height. */
+ui.addEffect = (effect) => {
+	ui.effects.push(effect);
 };
 
 module.exports = ui;
