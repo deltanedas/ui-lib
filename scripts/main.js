@@ -37,7 +37,8 @@ function loaded() {
 	}
 }
 
-ui.once(() => {
+// TODO: find a proper way to run a function once
+ui.once(null, () => {
 	// Only hook the reload event once
 	Events.on(EventType.ContentReloadEvent, run(() => {
 		// Clear any old elements when reloading
@@ -50,4 +51,5 @@ ui.once(() => {
 
 		ui.effects = [];
 	}));
-}, loaded);
+	loaded()
+});
