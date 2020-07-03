@@ -40,28 +40,6 @@ ui.onLoad = (func) => {
 	}
 }
 
-/* Run a function once.
-	Useful for hooking events.
-	loading: (Optional)
-		Called only when the client hasn't loaded yet.
-	loaded: (Optional)
-		Called every time.
-
-	Returns whether the client has already loaded. */
-ui.once = (loading, loaded) => {
-	// Client has already loaded, mods reloaded and/or just installed now.
-	if (Vars.ui.hudGroup) {
-		if (loaded) loaded();
-		return false;
-	}
-
-	Events.on(EventType.ClientLoadEvent, run(() => {
-		if (loading) loading();
-		if (loaded) loaded();
-	}));
-	return true;
-};
-
 /* Run events to add UI and stuff when assets are ready. */
 ui.load = () => {
 	var table;
@@ -91,19 +69,6 @@ ui.load = () => {
 		// Add the UI elements to the HUD
 		Vars.ui.hudGroup.addChild(area.table);
 	}
-};
-
-/* Clear any old elements when reloading mods.
-	Call ui.load afterwards. */
-ui.clear = () => {
-	var area;
-	for (var i in ui.areas) {
-		area = ui.areas[i];
-		area.table.clearChildren();
-		if (area.reloaded) area.reloaded();
-	}
-
-	ui.effects = [];
 };
 
 ui.getIcon = (icon) => {
@@ -139,10 +104,7 @@ ui.getIcon = (icon) => {
 		Called after all loadEvents but before the area is added to the HUD.
 		Argument is a shortcut for this.table.
 	added(Table): (Optional)
-		Called when a new table is added by ui.addTable.
-	reloaded(): (Optional)
-		Called when reloading mods.
-		Elements are cleared automatically. */
+		Called when a new table is added by ui.addTable. */
 ui.addArea = (name, area) => {
 	ui.areas[name] = area;
 };
@@ -194,7 +156,7 @@ ui.addButton = (name, icon, clicked, user) => {
 		Called every frame like a block's draw().
 		Coordinates are in screen space, not world space.
 		Textures are drawn at block scale.
-		For convenience, w and h are the screen width and height. */
+		For convenience, w and h are the screen's width and height. */
 ui.addEffect = (effect) => {
 	ui.effects.push(effect);
 };

@@ -14,6 +14,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 var ui = this.global.uiLib;
 
 /* Create all the areas */
@@ -56,10 +57,6 @@ ui.addArea("top", {
 		}
 		table.visible(boolp(() => this.shown));
 	},
-	reloaded() {
-		// Don't add dupe buttons
-		this.first = this.shown = false;
-	},
 
 	toggle(button) {
 		button.style.imageUp = this.shown ? Icon.upOpen : Icon.downOpen
@@ -85,10 +82,6 @@ ui.addArea("side", {
 			this.first = false;
 		}
 		table.visible(boolp(() => this.shown));
-	},
-	reloaded() {
-		// Don't add dupe buttons
-		this.first = this.shown = false;
 	},
 
 	toggle(button) {

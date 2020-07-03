@@ -18,9 +18,10 @@ var ui = require("ui-lib/library");
 require("areas");
 require("effects");
 
-// TODO: find a proper way to run a function once, this breaks when installing/enabling ui lib for the first time
-ui.once(null, () => {
-	// Only hook the reload event once
-	Events.on(EventType.ContentReloadEvent, run(ui.clear));
+if (Vars.ui.hudGroup) {
+	throw "Please restart the game for UI lib to work.";
+}
+
+Events.on(EventType.ClientLoadEvent, run(() => {
 	ui.load();
-});
+}));
