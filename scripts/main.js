@@ -19,7 +19,19 @@ require("areas");
 require("effects");
 
 if (Vars.ui.hudGroup) {
-	throw "Please restart the game for UI lib to work.";
+	/* Add a dialog similar to the "stop" one that was in 6.0 */
+	Core.app.post(run(() => {
+		const dialog = new FloatingDialog("Restart Mindustry");
+		dialog.cont.add("UI Lib requires Mindustry to be restarted to work.")
+			.grow().wrap().get().setAlignment(Align.center);
+		dialog.cont.row();
+		dialog.cont.addButton("$ok", run(() => {
+			Core.app.exit();
+		}));
+		dialog.fillParent = true;
+		dialog.show();
+	}));
+	throw "look at the dialog";
 }
 
 Events.on(EventType.ClientLoadEvent, run(() => {
