@@ -46,7 +46,7 @@ ui.addArea("buttons", {
 ui.addArea("top", {
 	init(top) {
 		top.top().left().marginTop(47.2 + 54).marginLeft(47.2 * 5 + 16);
-		top.defaults().top().left();
+		top.defaults().top().left().padBottom(8);
 	},
 	post(top) {},
 	added(table) {
@@ -72,7 +72,7 @@ ui.addArea("side", {
 		const base = Vars.mobile ? 47.2 * 2 : 47.2;
 		const mtop = base + 130 + 8;
 		side.top().left().marginTop(mtop).marginLeft(8);
-		side.defaults().top().left();
+		side.defaults().top().left().padBottom(8);
 	},
 	post(side) {},
 	added(table) {
