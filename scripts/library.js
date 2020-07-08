@@ -46,7 +46,7 @@ ui.load = () => {
 	for (var i in ui.areas) {
 		table = new Table();
 		table.setFillParent(true);
-		table.visible(boolp(() => Vars.ui.hudfrag.shown()));
+		table.visible(boolp(() => Vars.ui.hudfrag.shown() && !Vars.ui.minimap.shown()));
 		ui.areas[i].table = table;
 		ui.areas[i].init(table);
 	}
