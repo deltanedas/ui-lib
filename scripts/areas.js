@@ -102,5 +102,8 @@ ui.addArea("bottom", {
 // Custom drawing functions
 ui.addArea("effects", {
 	init() {},
-	post() {}
+	post() {},
+	added(table) {
+		table.touchable(Touchable.disabled);
+	}
 });
