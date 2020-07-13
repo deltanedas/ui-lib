@@ -33,27 +33,16 @@ Events.on(EventType.Trigger.update, run(() => {
 	const tile = Vars.world.tileWorld(world.x, world.y);
 	// 0, 0 to 1, 1
 	uniform.set(pos.x / Core.graphics.width, pos.y / Core.graphics.height);
-	var removed = false;
 
-	for (var i in ui.clickEvents) {
-		var event = ui.clickEvents[i];
+	ui.clickEvents = ui.clickEvents.filter(event => {
 		// Mod cancelled the event
-		if (!event) {
-			removed = true;
-			continue;
-		}
+		if (!event) return true;
 
 		if (!event.area || event.area.contains(uniform)) {
 			event.handler(pos, tile);
-			removed = true;
-			delete ui.clickEvents[i];
+			return true;
 		}
-	}
-
-	if (removed) {
-		// Like ES6 flat(), remove handled events
-		ui.clickEvents.splice();
-	}
+	});
 }));
 
 })();
