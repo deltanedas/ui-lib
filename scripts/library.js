@@ -21,6 +21,8 @@ if (this.global.uiLib) {
 var ui = {
 	// Functions to be called when atlas is ready
 	loadEvents: [],
+	// Functions to be called when the mouse is clicked in their area
+	clickEvents: [],
 	areas: {},
 	// Custom drawing functions
 	effects: [],
@@ -160,6 +162,22 @@ ui.addButton = (name, icon, clicked, user) => {
 ui.addEffect = (effect) => {
 	ui.effects.push(effect);
 };
+/* Call the handler when the mouse is clicked somewhere.
+	function(Vec2 pos, Tile tile) handler:
+		Called once when a mouse click is received.
+		Tile is null when not playing.
+    Rect area = (0, 0, 1, 1):
+        Valid area that a click is checked in.
+		Not in pixels as to work when resized.
+
+	Returns the index to ui.clickEvents should you need to cancel it. */
+ui.click = (handler, area) => {
+	ui.clickEvents.push({
+		handler: handler,
+		area: area
+	});
+	return ui.clickEvents.length;
+}
 
 module.exports = ui;
 this.global.uiLib = ui;

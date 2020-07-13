@@ -17,7 +17,7 @@
 var ui = require("ui-lib/library");
 require("areas");
 require("effects");
-
+require("clicks");
 if (Vars.ui.hudGroup) {
 	/* Add a dialog similar to the "stop" one that was in 6.0 */
 	Core.app.post(run(() => {
