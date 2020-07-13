@@ -169,14 +169,17 @@ ui.addEffect = (effect) => {
     Rect area = (0, 0, 1, 1):
         Valid area that a click is checked in.
 		Not in pixels as to work when resized.
+	boolean keep = false:
+		Whether to not remove the click handler after a click.
 
 	Returns the index to ui.clickEvents should you need to cancel it. */
-ui.click = (handler, area) => {
+ui.click = (handler, area, keep) => {
 	ui.clickEvents.push({
 		handler: handler,
-		area: area
+		area: area,
+		keep: keep
 	});
-	return ui.clickEvents.length;
+	return ui.clickEvents.length - 1;
 }
 
 module.exports = ui;

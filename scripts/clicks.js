@@ -36,12 +36,13 @@ Events.on(EventType.Trigger.update, run(() => {
 
 	ui.clickEvents = ui.clickEvents.filter(event => {
 		// Mod cancelled the event
-		if (!event) return true;
+		if (!event) return;
 
 		if (!event.area || event.area.contains(uniform)) {
 			event.handler(pos, tile);
-			return true;
+			return event.keep;
 		}
+		return true;
 	});
 }));
 
