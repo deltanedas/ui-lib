@@ -163,21 +163,18 @@ ui.addEffect = (effect) => {
 	ui.effects.push(effect);
 };
 /* Call the handler when the mouse is clicked somewhere.
-	function(Vec2 pos, Tile tile) handler:
+	function(Vec2 pos, Tile tile, boolean hasMouse) handler:
 		Called once when a mouse click is received.
-		Tile is null when not playing.
-    Rect area = (0, 0, 1, 1):
-        Valid area that a click is checked in.
-		Not in pixels as to work when resized.
-	boolean keep = false:
-		Whether to not remove the click handler after a click.
+		Tile is null when not playing or out of map.
+		If the player clicked a UI element and !world, hasMouse is true.
+	boolean world = false:
+		Whether to ignore clicks that are over UI elements.
 
 	Returns the index to ui.clickEvents should you need to cancel it. */
-ui.click = (handler, area, keep) => {
+ui.click = (handler, world) => {
 	ui.clickEvents.push({
 		handler: handler,
-		area: area,
-		keep: keep
+		world: world
 	});
 	return ui.clickEvents.length - 1;
 }

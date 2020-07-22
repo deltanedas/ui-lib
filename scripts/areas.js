@@ -46,6 +46,7 @@ ui.addArea("buttons", {
 ui.addArea("top", {
 	init(top) {
 		top.top().left().marginTop(47.2 + 54).marginLeft(47.2 * 5 + 16);
+		top.round = false;
 		top.defaults().top().left().padBottom(8);
 	},
 	post(top) {},

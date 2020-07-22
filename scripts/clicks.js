@@ -19,7 +19,6 @@
 
 const ui = require("library");
 
-const uniform = new Vec2();
 Events.on(EventType.Trigger.update, run(() => {
 	if (!Core.input.justTouched()) {
 		return;
@@ -31,18 +30,15 @@ Events.on(EventType.Trigger.update, run(() => {
 	const world = Core.input.mouseWorld()
 	// Tile clicked
 	const tile = Vars.world.tileWorld(world.x, world.y);
-	// 0, 0 to 1, 1
-	uniform.set(pos.x / Core.graphics.width, pos.y / Core.graphics.height);
+	const hasMouse = Core.scene.hasMouse();
 
 	ui.clickEvents = ui.clickEvents.filter(event => {
 		// Mod cancelled the event
 		if (!event) return;
+		// Clicked over a UI element
+		if (event.world && hasMouse) return;
 
-		if (!event.area || event.area.contains(uniform)) {
-			event.handler(pos, tile);
-			return event.keep;
-		}
-		return true;
+		return event.handler(pos, tile, hasMouse);
 	});
 }));
 
