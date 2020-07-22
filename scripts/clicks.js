@@ -35,8 +35,8 @@ Events.on(EventType.Trigger.update, run(() => {
 	ui.clickEvents = ui.clickEvents.filter(event => {
 		// Mod cancelled the event
 		if (!event) return;
-		// Clicked over a UI element
-		if (event.world && hasMouse) return;
+		// Clicked over a UI element, try again next time
+		if (event.world && hasMouse) return true;
 
 		return event.handler(pos, tile, hasMouse);
 	});
