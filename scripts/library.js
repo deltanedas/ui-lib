@@ -21,7 +21,7 @@ if (this.global.uiLib) {
 var ui = {
 	// Functions to be called when atlas is ready
 	loadEvents: [],
-	// Functions to be called when the mouse is clicked in their area
+	// Functions to be called when the mouse is clicked
 	clickEvents: [],
 	areas: {},
 	// Custom drawing functions

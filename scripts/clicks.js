@@ -19,15 +19,16 @@
 
 const ui = require("library");
 
+const world = new Vec2();
 Events.on(EventType.Trigger.update, run(() => {
 	if (!Core.input.justTouched()) {
 		return;
 	}
 
+	// Position in the mindustry world
+	world.set(Core.input.mouseWorld());
 	// 0, 0 to w, h
 	const pos = Core.input.mouse();
-	// Position in the mindustry world
-	const world = Core.input.mouseWorld()
 	// Tile clicked
 	const tile = Vars.world.tileWorld(world.x, world.y);
 	const hasMouse = Core.scene.hasMouse();
