@@ -31,6 +31,8 @@ const ui = {
 	// Custom drawing functions
 	effects: [],
 	emptyRun: run(() => {}),
+	// Dialog to show any runtime errors
+	errors: null,
 	// if the loadEvents have started processing
 	loaded: false
 };
@@ -129,12 +131,18 @@ ui.addArea = (name, area) => {
 		Called when the table is created. */
 ui.addTable = (area, name, user) => {
 	ui.onLoad(() => {
-		const root = ui.areas[area].table;
-		const table = new Table();
-		root.add(table).name(name);
-		root.row();
-		if (ui.areas[area].added) ui.areas[area].added(table);
-		user(table);
+		try {
+			const root = ui.areas[area].table;
+			const table = new Table();
+			root.add(table).name(name);
+			root.row();
+			if (ui.areas[area].added) {
+				ui.areas[area].added(table);
+			}
+			user(table);
+		} catch (e) {
+			ui.showError("Failed to add table " + name + " to area " + area + ": " + e);
+		}
 	});
 };
 
@@ -150,12 +158,23 @@ ui.addTable = (area, name, user) => {
 		Called when the button is created. */
 ui.addButton = (name, icon, clicked, user) => {
 	ui.onLoad(() => {
-		icon = ui.getIcon(icon);
-		const cell = ui.areas.buttons.table.addImageButton(icon, Styles.clearTransi, 47.2, ui.emptyRun);
-		cell.name(name);
-		const button = cell.get();
-		button.clicked(run(() => clicked(button)));
-		if (user) user(cell);
+		try {
+			icon = ui.getIcon(icon);
+			const cell = ui.areas.buttons.table.addImageButton(icon, Styles.clearTransi, 47.2, ui.emptyRun);
+			cell.name(name);
+			const button = cell.get();
+			button.clicked(run(() => {
+				/* UI crashes are only printed to stdout, not a crash log */
+				try {
+					clicked(button);
+				} catch (e) {
+					ui.showError("Error when clicking button " + name + ": " + e);
+				}
+			}));
+			if (user) user(cell);
+		} catch (e) {
+			ui.showError("Failed to add button " + name + ": " + e);
+		}
 	});
 };
 
@@ -192,6 +211,14 @@ ui.click = (handler, world) => {
 	});
 	return ui.clickEvents.length - 1;
 }
+
+/* Show an error dialog.
+   String error: message to show in the center of the dialog. */
+ui.showError = error => {
+	Log.err(error);
+	ui.errors.set(error);
+	Core.app.post(run(() => ui.errors.show()));
+};
 
 module.exports = ui;
 this.global.uiLib = ui;
