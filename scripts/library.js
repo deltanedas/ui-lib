@@ -163,7 +163,7 @@ ui.addButton = (name, icon, clicked, user) => {
 ui.addMenuButton = (name, icon, clicked, user) => {
 	ui.addTable("menu", name, t => {
 		t.addImageTextButton(name, ui.getIcon(icon), run(clicked)).height(48);
-	}, user);
+	}, user).size(210, 84);
 };
 
 /* Add a custom drawing functiom.
