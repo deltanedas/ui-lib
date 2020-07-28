@@ -14,11 +14,15 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
+(() => {
+
 if (this.global.uiLib) {
 	module.exports = this.global.uiLib;
-} else {
+	return;
+}
 
-var ui = {
+const ui = {
 	// Functions to be called when atlas is ready
 	loadEvents: [],
 	// Functions to be called when the mouse is clicked
@@ -68,8 +72,10 @@ ui.load = () => {
 		area.table.cells.sortComparing(func(cell => cell.get().name));
 
 		area.post(area.table);
-		// Add the UI elements to the HUD
-		Vars.ui.hudGroup.addChild(area.table);
+		// Add the UI elements to the HUD by default
+		if (!area.customGroup) {
+			Vars.ui.hudGroup.addChild(area.table);
+		}
 	}
 };
 
@@ -153,15 +159,23 @@ ui.addButton = (name, icon, clicked, user) => {
 	});
 };
 
+/* Shortcut for adding an ImageTextButton to the menu area */
+ui.addMenuButton = (name, icon, clicked, user) => {
+	ui.addTable("menu", name, t => {
+		t.addImageTextButton(name, ui.getIcon(icon), run(clicked)).height(48);
+	}, user);
+};
+
 /* Add a custom drawing functiom.
 	function(int w, int h) effect:
-		Called every frame like a block's draw().
+		Called every frame in-game like a block's draw().
 		Coordinates are in screen space, not world space.
 		Textures are drawn at block scale.
 		For convenience, w and h are the screen's width and height. */
-ui.addEffect = (effect) => {
+ui.addEffect = effect => {
 	ui.effects.push(effect);
 };
+
 /* Call the handler when the mouse is clicked somewhere.
 	function(Vec2 pos, Tile tile, boolean hasMouse) handler:
 		Called once when a mouse click is received.
@@ -181,4 +195,5 @@ ui.click = (handler, world) => {
 
 module.exports = ui;
 this.global.uiLib = ui;
-}
+
+})();

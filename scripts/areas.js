@@ -15,7 +15,9 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-var ui = this.global.uiLib;
+(() => {
+
+const ui = this.global.uiLib;
 
 /* Create all the areas */
 
@@ -92,6 +94,8 @@ ui.addArea("side", {
 	first: true,
 	shown: false
 });
+// Logical alias
+ui.areas.left = ui.areas.side;
 
 ui.addArea("bottom", {
 	init(bottom) {
@@ -100,7 +104,7 @@ ui.addArea("bottom", {
 	post() {}
 });
 
-// Custom drawing functions
+/* Custom drawing functions */
 ui.addArea("effects", {
 	init() {},
 	post() {},
@@ -108,3 +112,47 @@ ui.addArea("effects", {
 		table.touchable(Touchable.disabled);
 	}
 });
+
+/* Button to open a dialog only visible from the menu screen */
+ui.addArea("menu", {
+	init(table) {
+		this.dialog = new FloatingDialog("$ui.more");
+		this.dialog.addCloseButton();
+
+		const pane = new ScrollPane(table);
+		this.dialog.cont.add(pane).grow();
+
+		const parent = new WidgetGroup();
+		parent.fillParent = true;
+		parent.touchable(Touchable.childrenOnly);
+		Vars.ui.menuGroup.addChild(parent);
+		table.visible(boolp(() => true));
+
+		if (Vars.mobile) {
+			this.mobileButton(parent);
+		} else {
+			this.desktopButton(parent);
+		}
+	},
+
+	post() {},
+
+	mobileButton(parent) {
+		const style = new TextButton.TextButtonStyle(
+			Tex.buttonEdge4,
+			Tex.buttonEdgeOver4,
+			Tex.buttonEdge4,
+			Fonts.def);
+
+		parent.fill(cons(button => {
+			button.addButton("$ui.more", run(() => this.dialog.show()))
+				.top().left().fill().size(84, 45).get().setStyle(style);
+		}));
+	},
+
+	customGroup: true,
+
+	dialog: null
+});
+
+})();

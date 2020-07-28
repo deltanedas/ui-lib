@@ -14,20 +14,24 @@
 	You should have received a copy of the GNU General Public License
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-var ui = require("ui-lib/library");
+
+(() => {
+
+const ui = require("ui-lib/library");
 require("areas");
 require("effects");
 require("clicks");
+
 if (Vars.ui.hudGroup) {
 	/* Add a dialog similar to the "stop" one that was in 6.0 */
 	Core.app.post(run(() => {
-		const dialog = new FloatingDialog("Restart Mindustry");
-		dialog.cont.add("UI Lib requires Mindustry to be restarted to work.")
+		const dialog = new FloatingDialog("$ui.restart");
+		dialog.cont.add("$ui.restart-desc")
 			.grow().wrap().get().setAlignment(Align.center);
 		dialog.cont.row();
 		dialog.cont.addButton("$ok", run(() => {
 			Core.app.exit();
-		}));
+		})).size(80, 40);
 		dialog.fillParent = true;
 		dialog.show();
 	}));
@@ -37,3 +41,5 @@ if (Vars.ui.hudGroup) {
 Events.on(EventType.ClientLoadEvent, run(() => {
 	ui.load();
 }));
+
+})();
