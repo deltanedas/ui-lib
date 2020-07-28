@@ -15,18 +15,28 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+(() => {
+
 ui.onLoad(() => {
 	// Use one table to reduce setting Draw.scl
 	const table = extend(Table, {
 		draw() {
+			const w = Core.graphics.width, h = Core.graphics.height;
 			const prev = Draw.scl;
 			Draw.scl = 1;
+
 			for (var i in ui.effects) {
-				ui.effects[i](Core.graphics.width, Core.graphics.height);
+				var effect = ui.effects[i];
+				if (effect.visible()) {
+					effect.draw(w, h);
+				}
 			}
+
 			Draw.scl = prev;
 		}
 	});
 
 	ui.areas.effects.table.add(table).name("effect");
 });
+
+})();

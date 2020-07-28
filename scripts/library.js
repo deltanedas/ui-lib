@@ -54,7 +54,7 @@ ui.load = () => {
 	for (var i in ui.areas) {
 		table = new Table();
 		table.setFillParent(true);
-		table.visible(boolp(() => Vars.ui.hudfrag.shown() && !Vars.ui.minimapfrag.shown()));
+		table.visible(boolp(() => !Vars.ui.minimapfrag.shown()));
 		ui.areas[i].table = table;
 		ui.areas[i].init(table);
 	}
@@ -107,13 +107,13 @@ ui.getIcon = (icon) => {
 };
 
 /* Area is an object with these functions:
-	init(Table):
+	void init(Table):
 		Called before any loadEvents.
 		Argument is a shortcut for this.table.
-	post(Table):
+	void post(Table):
 		Called after all loadEvents but before the area is added to the HUD.
 		Argument is a shortcut for this.table.
-	added(Table): (Optional)
+	void added(Table): (Optional)
 		Called when a new table is added by ui.addTable. */
 ui.addArea = (name, area) => {
 	ui.areas[name] = area;
@@ -127,7 +127,7 @@ ui.addArea = (name, area) => {
 		See areas.js.
 	String name:
 		Name of the table, used for sorting.
-	function(Table) user:
+	void user(Table):
 		Called when the table is created. */
 ui.addTable = (area, name, user) => {
 	ui.onLoad(() => {
@@ -152,9 +152,9 @@ ui.addTable = (area, name, user) => {
 	Drawable icon:
 		The icon of the button.
 		Use Icon.xxx, a TextureRegion, UnlockableContent or String.
-	function(ImageButton) clicked:
+	void clicked(ImageButton):
 		Called when the button is clicked.
-	function(Cell) user: (Optional)
+	void user(Cell): (Optional)
 		Called when the button is created. */
 ui.addButton = (name, icon, clicked, user) => {
 	ui.onLoad(() => {
@@ -190,9 +190,17 @@ ui.addMenuButton = (name, icon, clicked, user) => {
 		Called every frame in-game like a block's draw().
 		Coordinates are in screen space, not world space.
 		Textures are drawn at block scale.
-		For convenience, w and h are the screen's width and height. */
-ui.addEffect = effect => {
-	ui.effects.push(effect);
+		For convenience, w and h are the screen's width and height.
+	boolean visible():
+		Whether to draw the effect or not.
+		By default only draws when in-game. */
+ui.addEffect = (effect, visible) => {
+	ui.effects.push({
+		draw: effect,
+		visible: visible || (() => {
+			return !Vars.state.is(GameState.State.menu);
+		})
+	});
 };
 
 /* Call the handler when the mouse is clicked somewhere.

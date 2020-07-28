@@ -107,10 +107,14 @@ ui.addArea("bottom", {
 /* Custom drawing functions */
 ui.addArea("effects", {
 	init() {},
-	post() {},
+	post(effects) {
+		Core.scene.add(effects);
+	},
 	added(table) {
 		table.touchable(Touchable.disabled);
-	}
+	},
+
+	customGroup: true
 });
 
 /* Button to open a dialog only visible from the menu screen */
@@ -126,7 +130,6 @@ ui.addArea("menu", {
 		parent.fillParent = true;
 		parent.touchable(Touchable.childrenOnly);
 		Vars.ui.menuGroup.addChild(parent);
-		table.visible(boolp(() => true));
 
 		if (Vars.mobile) {
 			this.mobileButton(parent);
