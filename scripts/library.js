@@ -71,7 +71,10 @@ ui.load = () => {
 	for (var i in ui.areas) {
 		area = ui.areas[i];
 		// Sort the cells by name
-		area.table.cells.sortComparing(func(cell => cell.get().name));
+		area.table.cells.sortComparing(func(cell => {
+			const name = cell.get().name;
+			return name[0] == '$' ? Core.bundle.get(name.substr(1)) : name;
+		}));
 
 		area.post(area.table);
 		// Add the UI elements to the HUD by default

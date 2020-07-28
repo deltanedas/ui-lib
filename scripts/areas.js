@@ -124,6 +124,7 @@ ui.addArea("menu", {
 		this.dialog.addCloseButton();
 
 		const pane = new ScrollPane(table);
+		table.defaults().pad(6);
 		this.dialog.cont.add(pane).grow();
 
 		const parent = new WidgetGroup();
