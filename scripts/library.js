@@ -243,7 +243,7 @@ ui.showError = error => {
 		If a function, uses the output of that function.
 		Fields of Input$TextInput that override the defaults of:
 			multiline: true,
-			accepted: accepted(text) and set area.text */
+			accepted: set area.text and run accepted */
 ui.mobileAreaInput = (area, accepted, params) => {
 	if (!Vars.mobile) return;
 
@@ -259,8 +259,9 @@ ui.mobileAreaInput = (area, accepted, params) => {
 			const input = new Input.TextInput;
 			input.multiline = true;
 			input.accepted = cons(text => {
+				// TextArea had its carriage return and linefeed keys switched
+				area.text = text.replace(/\n/g, "\r");
 				accepted(text);
-				area.text = text.replace("\n", "\r");
 			});
 			Object.assign(input, params(area));
 
