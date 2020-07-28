@@ -260,7 +260,7 @@ ui.mobileAreaInput = (area, accepted, params) => {
 			input.multiline = true;
 			input.accepted = cons(text => {
 				accepted(text);
-				area.text = text;
+				area.text = text.replace("\n", "\r");
 			});
 			Object.assign(input, params(area));
 
