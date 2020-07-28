@@ -162,8 +162,8 @@ ui.addButton = (name, icon, clicked, user) => {
 /* Shortcut for adding an ImageTextButton to the menu area */
 ui.addMenuButton = (name, icon, clicked, user) => {
 	ui.addTable("menu", name, t => {
-		t.addImageTextButton(name, ui.getIcon(icon), run(clicked)).height(48);
-	}, user).size(210, 84);
+		t.addImageTextButton(name, ui.getIcon(icon), run(clicked)).height(48).size(210, 84);
+	});
 };
 
 /* Add a custom drawing functiom.
