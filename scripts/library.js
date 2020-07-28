@@ -237,11 +237,13 @@ ui.showError = error => {
 
 	TextField area:
 		Field to get input for.
+	void accepted(String text):
+		Ran when the input is accepted.
 	Object params / Object params():
 		If a function, uses the output of that function.
 		Fields of Input$TextInput that override the defaults of:
 			multiline: true,
-			accepted: cons(accepted) */
+			accepted: accepted(text) and set area.text */
 ui.mobileAreaInput = (area, accepted, params) => {
 	if (!Vars.mobile) return;
 
@@ -256,7 +258,10 @@ ui.mobileAreaInput = (area, accepted, params) => {
 
 			const input = new Input.TextInput;
 			input.multiline = true;
-			input.accepted = cons(accepted);
+			input.accepted = cons(text => {
+				accepted(text);
+				area.text = text;
+			});
 			Object.assign(input, params(area));
 
 			Core.input.getTextInput(input);
