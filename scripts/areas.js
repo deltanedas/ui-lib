@@ -146,7 +146,7 @@ ui.addArea("menu", {
 
 		parent.fill(cons(button => {
 			button.addButton("$ui.more", run(() => this.dialog.show()))
-				.top().left().fill().size(84, 45).get().setStyle(style);
+				.top().left().grow().size(84, 45).get().setStyle(style);
 		}));
 	},
 
