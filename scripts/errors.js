@@ -17,7 +17,7 @@
 
 (() => {
 
-const ui = require("ui-lib/library");
+const ui = this.global.uiLib;
 
 ui.onLoad(() => {
 	const dialog = extendContent(FloatingDialog, "$ui.error", {

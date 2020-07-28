@@ -17,7 +17,7 @@
 
 (() => {
 
-const ui = require("ui-lib/library");
+const ui = this.global.uiLib;
 
 const world = new Vec2();
 Events.on(EventType.Trigger.update, run(() => {

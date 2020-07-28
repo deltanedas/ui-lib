@@ -37,7 +37,7 @@ const ui = {
 	loaded: false
 };
 
-/* UTILITY FUNCTIONS */
+/** UTILITY FUNCTIONS **/
 
 /* Run a function when the client loads, or now if it already has. */
 ui.onLoad = (func) => {
@@ -119,7 +119,7 @@ ui.addArea = (name, area) => {
 	ui.areas[name] = area;
 };
 
-/* UI FUNCTIONS */
+/** UI FUNCTIONS **/
 
 /* Add a table to an area
 	String area:
@@ -203,15 +203,18 @@ ui.addEffect = (effect, visible) => {
 	});
 };
 
+/** EXTRA UTILITIES */
+
 /* Call the handler when the mouse is clicked somewhere.
-	function(Vec2 pos, Tile tile, boolean hasMouse) handler:
+	void handler(Vec2 pos, Tile tile, boolean hasMouse):
 		Called once when a mouse click is received.
 		Tile is null when not playing or out of map.
 		If the player clicked a UI element and !world, hasMouse is true.
 	boolean world = false:
 		Whether to ignore clicks that are over UI elements.
 
-	Returns the index to ui.clickEvents should you need to cancel it. */
+	Returns the index to ui.clickEvents should you need to cancel it,
+	 use delete ui.clickEvents[index] if so. */
 ui.click = (handler, world) => {
 	ui.clickEvents.push({
 		handler: handler,
@@ -226,6 +229,39 @@ ui.showError = error => {
 	Log.err(error);
 	ui.errors.set(error);
 	Core.app.post(run(() => ui.errors.show()));
+};
+
+/* TextAreas can't get newlines on Android, use the native text input.
+	Does nothing on desktop.
+	Not very useful for TextFields.
+
+	TextField area:
+		Field to get input for.
+	Object params / Object params():
+		If a function, uses the output of that function.
+		Fields of Input$TextInput that override the defaults of:
+			multiline: true,
+			accepted: cons(accepted) */
+ui.mobileAreaInput = (area, accepted, params) => {
+	if (!Vars.mobile) return;
+
+	/* Constant params */
+	if (typeof(params) != "function") {
+		params = () => params;
+	}
+
+	area.update(run(() => {
+		if (Core.scene.keyboardFocus == area) {
+			Core.scene.keyboardFocus = null;
+
+			const input = new Input.TextInput;
+			input.multiline = true;
+			input.accepted = cons(accepted);
+			Object.assign(input, params(area));
+
+			Core.input.getTextInput(input);
+		}
+	}));
 };
 
 module.exports = ui;
