@@ -141,6 +141,8 @@ ui.addArea("menu", {
 
 	post() {},
 
+	desktopButton(parent) {},
+
 	mobileButton(parent) {
 		const style = new TextButton.TextButtonStyle(
 			Tex.buttonEdge4,
