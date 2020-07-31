@@ -127,21 +127,49 @@ ui.addArea("menu", {
 		table.defaults().pad(6);
 		this.dialog.cont.add(pane).grow();
 
-		const parent = new WidgetGroup();
-		parent.fillParent = true;
-		parent.touchable(Touchable.childrenOnly);
-		Vars.ui.menuGroup.addChild(parent);
-
 		if (Vars.mobile) {
+			var parent = new WidgetGroup();
+			parent.fillParent = true;
+			parent.touchable(Touchable.childrenOnly);
+			Vars.ui.menuGroup.addChild(parent);
 			this.mobileButton(parent);
 		} else {
-			this.desktopButton(parent);
+			this.desktopButton(Vars.ui.menuGroup.children.get(0));
 		}
 	},
 
 	post() {},
 
-	desktopButton(parent) {},
+	buildDesktop(parent) {
+		// Basically clearMenut
+		const style = new TextButton.TextButtonStyle(Styles.cleart);
+		style.up = Tex.clear;
+		style.down = Styles.flatDown;
+
+		// menufrag.container's first table
+		const buttons = parent.children.get(1).cells.get(1).get();
+		/* Specialized version of menufrag.buttons(buttons, new Buttoni(...)) */
+		buttons.addImageTextButton("$ui.more", Icon.add, style, run(() => {
+			this.dialog.show();
+		})).marginLeft(11);
+	},
+
+	desktopButton(parent) {
+		if (Core.assets.progress != 1) {
+			Core.app.post(run(() => {
+				this.desktopButton(parent);
+			}));
+			return;
+		}
+
+		// ClientLauncher has a 6-long post snek, one-up it.
+		Time.run(7, run(() => {
+			this.buildDesktop(parent);
+			Events.on(EventType.ResizeEvent, run(() => {
+				this.buildDesktop(parent);
+			}));
+		}));
+	},
 
 	mobileButton(parent) {
 		const style = new TextButton.TextButtonStyle(
