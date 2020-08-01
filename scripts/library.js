@@ -230,8 +230,10 @@ ui.click = (handler, world) => {
    String error: message to show in the center of the dialog. */
 ui.showError = error => {
 	Log.err(error);
-	ui.errors.set(error);
-	Core.app.post(run(() => ui.errors.show()));
+	Core.app.post(run(() => {
+		ui.errors.set(error);
+		ui.errors.show();
+	}));
 };
 
 /* TextAreas can't get newlines on Android, use the native text input.
