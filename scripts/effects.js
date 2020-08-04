@@ -15,8 +15,6 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-(() => {
-
 const ui = this.global.uiLib;
 
 ui.onLoad(() => {
@@ -41,4 +39,3 @@ ui.onLoad(() => {
 	ui.areas.effects.table.add(table).name("effect");
 });
 
-})();

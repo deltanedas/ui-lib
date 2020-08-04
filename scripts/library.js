@@ -30,7 +30,6 @@ const ui = {
 	areas: {},
 	// Custom drawing functions
 	effects: [],
-	emptyRun: run(() => {}),
 	// Dialog to show any runtime errors
 	errors: null,
 	// if the loadEvents have started processing
@@ -40,21 +39,21 @@ const ui = {
 /** UTILITY FUNCTIONS **/
 
 /* Run a function when the client loads, or now if it already has. */
-ui.onLoad = (func) => {
+ui.onLoad = func => {
 	if (ui.loaded) {
 		func();
 	} else {
 		ui.loadEvents.push(func);
 	}
-}
+};
 
 /* Run events to add UI and stuff when assets are ready. */
 ui.load = () => {
 	var table;
 	for (var i in ui.areas) {
 		table = new Table();
-		table.setFillParent(true);
-		table.visible(boolp(() => !Vars.ui.minimapfrag.shown()));
+		table.fillParent = true;
+		table.visibility = () => !Vars.ui.minimapfrag.shown();
 		ui.areas[i].table = table;
 		ui.areas[i].init(table);
 	}
@@ -71,10 +70,10 @@ ui.load = () => {
 	for (var i in ui.areas) {
 		area = ui.areas[i];
 		// Sort the cells by name
-		area.table.cells.sortComparing(func(cell => {
+		area.table.cells.sortComparing(cell => {
 			const name = cell.get().name;
 			return name[0] == '$' ? Core.bundle.get(name.substr(1)) : name;
-		}));
+		});
 
 		area.post(area.table);
 		// Add the UI elements to the HUD by default
@@ -163,17 +162,17 @@ ui.addButton = (name, icon, clicked, user) => {
 	ui.onLoad(() => {
 		try {
 			icon = ui.getIcon(icon);
-			const cell = ui.areas.buttons.table.addImageButton(icon, Styles.clearTransi, 47.2, ui.emptyRun);
+			const cell = ui.areas.buttons.table.button(icon, Styles.clearTransi, 47.2, ()=>{});
 			cell.name(name);
 			const button = cell.get();
-			button.clicked(run(() => {
+			button.clicked(() => {
 				/* UI crashes are only printed to stdout, not a crash log */
 				try {
 					clicked(button);
 				} catch (e) {
 					ui.showError("Error when clicking button " + name + ": " + e);
 				}
-			}));
+			});
 			if (user) user(cell);
 		} catch (e) {
 			ui.showError("Failed to add button " + name + ": " + e);
@@ -184,7 +183,7 @@ ui.addButton = (name, icon, clicked, user) => {
 /* Shortcut for adding an ImageTextButton to the menu area */
 ui.addMenuButton = (name, icon, clicked, user) => {
 	ui.addTable("menu", name, t => {
-		t.addImageTextButton(name, ui.getIcon(icon), run(clicked)).height(48).size(210, 84);
+		t.button(name, ui.getIcon(icon), clicked).height(48).size(210, 84);
 	});
 };
 
@@ -227,13 +226,14 @@ ui.click = (handler, world) => {
 }
 
 /* Show an error dialog.
+   Similar to Vars.ui.showErrorMessage but it is only built once.
    String error: message to show in the center of the dialog. */
 ui.showError = error => {
 	Log.err(error);
-	Core.app.post(run(() => {
+	Core.app.post(() => {
 		ui.errors.set(error);
 		ui.errors.show();
-	}));
+	});
 };
 
 /* TextAreas can't get newlines on Android, use the native text input.
@@ -257,22 +257,22 @@ ui.mobileAreaInput = (area, accepted, params) => {
 		params = () => params;
 	}
 
-	area.update(run(() => {
+	area.update(() => {
 		if (Core.scene.keyboardFocus == area) {
 			Core.scene.keyboardFocus = null;
 
 			const input = new Input.TextInput;
 			input.multiline = true;
-			input.accepted = cons(text => {
+			input.accepted = text => {
 				// TextArea had its carriage return and linefeed keys switched
 				area.text = text.replace(/\n/g, "\r");
 				accepted(text);
-			});
+			};
 			Object.assign(input, params(area));
 
 			Core.input.getTextInput(input);
 		}
-	}));
+	});
 };
 
 module.exports = ui;

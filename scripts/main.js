@@ -15,32 +15,10 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-(() => {
-
 const ui = require("ui-lib/library");
 require("areas");
 require("effects");
 require("clicks");
 require("errors");
 
-if (Vars.ui.hudGroup) {
-	/* Add a dialog similar to the "stop" one that was in 6.0 */
-	Core.app.post(run(() => {
-		const dialog = new FloatingDialog("$ui.restart");
-		dialog.cont.add("$ui.restart-desc")
-			.grow().wrap().get().setAlignment(Align.center);
-		dialog.cont.row();
-		dialog.cont.addButton("$ok", run(() => {
-			Core.app.exit();
-		})).size(80, 40);
-		dialog.fillParent = true;
-		dialog.show();
-	}));
-	throw "look at the dialog";
-}
-
-Events.on(EventType.ClientLoadEvent, run(() => {
-	ui.load();
-}));
-
-})();
+Events.on(ClientLoadEvent, ui.load);

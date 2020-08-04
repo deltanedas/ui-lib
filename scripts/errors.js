@@ -15,24 +15,26 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-(() => {
-
 const ui = this.global.uiLib;
 
 ui.onLoad(() => {
-	const dialog = extendContent(FloatingDialog, "$ui.error", {
+	const dialog = extendContent(Dialog, "", {
 		set(msg) {
-			this.cont.cells.get(1).get().text = msg;
+			this.cont.cells.get(2).get().text = msg;
 		}
 	});
 
 	const table = dialog.cont;
+	table.fillParent = true;
+	table.margin(15);
 	table.add("$error.title");
 	table.row();
-	table.add("Success").size(500, 300).get().wrap = true;
+	table.image().size(300, 4).pad(2).color(Color.scarlet);
+	table.row();
+	table.add("Success").pad(2).growX().wrap()
+		.get().alignment = Align.center;
+	table.row();
+	table.button("$ok", () => dialog.hide()).size(120, 50).pad(4);
 
-	dialog.addCloseButton();
 	ui.errors = dialog;
 });
-
-})();

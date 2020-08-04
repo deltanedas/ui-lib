@@ -15,12 +15,11 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-(() => {
-
 const ui = this.global.uiLib;
 
 const world = new Vec2();
-Events.on(EventType.Trigger.update, run(() => {
+
+Events.run(Trigger.update, () => {
 	if (!Core.input.justTouched()) {
 		return;
 	}
@@ -41,6 +40,4 @@ Events.on(EventType.Trigger.update, run(() => {
 
 		return event.handler(pos, tile, hasMouse);
 	});
-}));
-
-})();
+});
