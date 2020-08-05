@@ -208,9 +208,8 @@ ui.addEffect = (effect, visible) => {
 /** EXTRA UTILITIES */
 
 /* Call the handler when the mouse is clicked somewhere.
-	void handler(Vec2 pos, Tile tile, boolean hasMouse):
+	void handler(Vec2 screen, Vec2 world, boolean hasMouse):
 		Called once when a mouse click is received.
-		Tile is null when not playing or out of map.
 		If the player clicked a UI element and !world, hasMouse is true.
 	boolean world = false:
 		Whether to ignore clicks that are over UI elements.

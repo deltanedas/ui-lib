@@ -28,8 +28,6 @@ Events.run(Trigger.update, () => {
 	world.set(Core.input.mouseWorld());
 	// 0, 0 to w, h
 	const pos = Core.input.mouse();
-	// Tile clicked
-	const tile = Vars.world.tileWorld(world.x, world.y);
 	const hasMouse = Core.scene.hasMouse();
 
 	ui.clickEvents = ui.clickEvents.filter(event => {
@@ -38,6 +36,6 @@ Events.run(Trigger.update, () => {
 		// Clicked over a UI element, try again next time
 		if (event.world && hasMouse) return true;
 
-		return event.handler(pos, tile, hasMouse);
+		return event.handler(pos, world, hasMouse);
 	});
 });
