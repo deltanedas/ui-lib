@@ -30,8 +30,10 @@ const ui = {
 	areas: {},
 	// Custom drawing functions
 	effects: [],
-	// Dialog to show any runtime errors
+	// Dialog used to show any runtime errors
 	errors: null,
+	// Dialog used to select items from a list
+	selection: null,
 	// if the loadEvents have started processing
 	loaded: false
 };
@@ -273,6 +275,33 @@ ui.mobileAreaInput = (area, accepted, params) => {
 		}
 	});
 };
+
+/* Have the user select an option from a list.
+	Values can be any type, but must be String[] if names isn't set.
+
+	String title:
+		Title of the dialog.
+	Object[] values:
+		Values returned when clicking a button.
+	void selector(Object):
+		Called when the user pressed a button.
+		Object is values[i].
+	String[] names / String names(int i, Object value):
+		Array of names used in place of values.
+		If a function, the name of a button will be the return value of it.
+		Value is values[i] and i is the button index in the list. */
+ui.select = (title, values, selector, names) => {
+	if (!names) names = values;
+	if (typeof(names) != "function") {
+		const arr = names;
+		names = i => arr[i];
+	}
+
+	Core.app.post(() => {
+		ui.selection.rebuild(title, values, selector, names);
+		ui.selection.show();
+	});
+}
 
 module.exports = ui;
 this.global.uiLib = ui;
