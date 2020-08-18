@@ -18,7 +18,9 @@
 const ui = this.global.uiLib;
 
 // Sometimes being explicit about types is needed
-const cons = method => extend(Cons, {get: method});
+if (typeof(cons) == "undefined") {
+	const cons = method => extend(Cons, {get: method});
+}
 
 /* Create all the areas */
 
