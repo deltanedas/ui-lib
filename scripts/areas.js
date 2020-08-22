@@ -58,7 +58,7 @@ ui.addArea("top", {
 	added(table) {
 		if (this.first) {
 			// avoid some clutter on the screen
-			ui.button("!!!top-visibility", Icon.upOpen, button => this.toggle(button));
+			ui.addButton("!!!top-visibility", Icon.upOpen, button => this.toggle(button));
 			this.first = false;
 		}
 		table.visibility = () => this.shown;
@@ -84,7 +84,7 @@ ui.addArea("side", {
 	added(table) {
 		if (this.first) {
 			// avoid some clutter on the screen
-			ui.button("!!!side-visibility", Icon.leftOpen, button => this.toggle(button));
+			ui.addButton("!!!side-visibility", Icon.leftOpen, button => this.toggle(button));
 			this.first = false;
 		}
 		table.visibility = () => this.shown;

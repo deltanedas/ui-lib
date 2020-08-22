@@ -145,7 +145,7 @@ ui.addTable = (area, name, user) => {
 			}
 			user(table);
 		} catch (e) {
-			ui.showError("Failed to add table " + name + " to area " + area + ": " + e);
+			ui.showError("Failed to add table " + name + " to area " + area, e);
 		}
 	});
 };
@@ -172,12 +172,12 @@ ui.addButton = (name, icon, clicked, user) => {
 				try {
 					clicked(button);
 				} catch (e) {
-					ui.showError("Error when clicking button " + name + ": " + e);
+					ui.showError("Error when clicking button " + name, e);
 				}
 			});
 			if (user) user(cell);
 		} catch (e) {
-			ui.showError("Failed to add button " + name + ": " + e);
+			ui.showError("Failed to add button " + name, e);
 		}
 	});
 };
@@ -227,12 +227,22 @@ ui.click = (handler, world) => {
 }
 
 /* Show an error dialog.
-   Similar to Vars.ui.showErrorMessage but it is only built once.
-   String error: message to show in the center of the dialog. */
-ui.showError = error => {
-	Log.err(error);
+	Similar to Vars.ui.showErrorMessage but it is only built once.
+	String msg: Info about when the error was caught.
+		Prepended to error, or used on its own if error is null.
+	String/Exception error: message to show in the center of the dialog. */
+ui.showError = (msg, error) => {
+	if (error) {
+		if (typeof(error) == "object") {
+			error = error.message + "\n" + error.fileName + ": " + error.lineNumber;
+		}
+
+		msg = msg + ": " + error;
+	}
+
+	Log.err(msg);
 	Core.app.post(() => {
-		ui.errors.set(error);
+		ui.errors.set(msg);
 		ui.errors.show();
 	});
 };

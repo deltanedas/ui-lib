@@ -17,6 +17,7 @@
 
 const ui = this.global.uiLib;
 
+//Events.run(Trigger.draw, () => {
 ui.onLoad(() => {
 	// Use one table to reduce setting Draw.scl
 	const table = extend(Table, {
@@ -38,4 +39,3 @@ ui.onLoad(() => {
 
 	ui.areas.effects.table.add(table).name("effect");
 });
-
