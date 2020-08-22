@@ -17,10 +17,11 @@
 
 const ui = this.global.uiLib;
 
-Events.run(Trigger.postDraw, () => {
-	Draw.z(Layer.overlayUI);
-
+Events.run(Trigger.uiDrawBegin, () => {
 	const w = Core.graphics.width, h = Core.graphics.height;
+
+	const prev = Draw.scl;
+	Draw.proj(Core.scene.camera);
 
 	for (var i in ui.effects) {
 		var effect = ui.effects[i];
@@ -28,4 +29,6 @@ Events.run(Trigger.postDraw, () => {
 			effect.draw(w, h);
 		}
 	}
+
+	Draw.flush();
 });
