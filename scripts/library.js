@@ -15,8 +15,6 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-print("ui lib required")
-
 const ui = {
 	// Functions to be called when atlas is ready
 	loadEvents: [],
