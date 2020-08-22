@@ -107,19 +107,6 @@ ui.addArea("bottom", {
 	post() {}
 });
 
-/* Custom drawing functions */
-ui.addArea("effects", {
-	init() {},
-	post(effects) {
-		Core.scene.add(effects);
-	},
-	added(table) {
-		table.touchable = Touchable.disabled;
-	},
-
-	customGroup: true
-});
-
 /* Button to open a dialog only visible from the menu screen */
 ui.addArea("menu", {
 	init(table) {

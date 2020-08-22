@@ -15,12 +15,7 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-(() => {
-
-if (this.global.uiLib) {
-	module.exports = this.global.uiLib;
-	return;
-}
+print("ui lib required")
 
 const ui = {
 	// Functions to be called when atlas is ready
@@ -315,5 +310,3 @@ ui.select = (title, values, selector, names) => {
 
 module.exports = ui;
 this.global.uiLib = ui;
-
-})();

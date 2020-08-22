@@ -17,25 +17,15 @@
 
 const ui = this.global.uiLib;
 
-//Events.run(Trigger.draw, () => {
-ui.onLoad(() => {
-	// Use one table to reduce setting Draw.scl
-	const table = extend(Table, {
-		draw() {
-			const w = Core.graphics.width, h = Core.graphics.height;
-			const prev = Draw.scl;
-			Draw.scl = 1;
+Events.run(Trigger.postDraw, () => {
+	Draw.z(Layer.overlayUI);
 
-			for (var i in ui.effects) {
-				var effect = ui.effects[i];
-				if (effect.visible()) {
-					effect.draw(w, h);
-				}
-			}
+	const w = Core.graphics.width, h = Core.graphics.height;
 
-			Draw.scl = prev;
+	for (var i in ui.effects) {
+		var effect = ui.effects[i];
+		if (effect.visible()) {
+			effect.draw(w, h);
 		}
-	});
-
-	ui.areas.effects.table.add(table).name("effect");
+	}
 });
