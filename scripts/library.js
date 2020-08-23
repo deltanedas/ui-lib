@@ -198,6 +198,7 @@ ui.addEffect = (effect, visible) => {
 			return !Vars.state.is(GameState.State.menu);
 		})
 	});
+	return ui.effects.length - 1;
 };
 
 /** EXTRA UTILITIES */
