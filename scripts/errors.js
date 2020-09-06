@@ -18,9 +18,10 @@
 const ui = this.global.uiLib;
 
 ui.onLoad(() => {
+	var error;
 	const dialog = extendContent(Dialog, "", {
 		set(msg) {
-			this.cont.cells.get(2).get().text = msg;
+			error.text = msg;
 		}
 	});
 
@@ -31,8 +32,10 @@ ui.onLoad(() => {
 	table.row();
 	table.image().size(300, 4).pad(2).color(Color.scarlet);
 	table.row();
-	table.add("Success").pad(2).growX().wrap()
-		.get().alignment = Align.center;
+	table.pane(t => {
+		error = t.add("Success").pad(2).growX().wrap().get();
+		error.alignment = Align.center;
+	}).size(400, 300);
 	table.row();
 	table.button("$ok", () => dialog.hide()).size(120, 50).pad(4);
 

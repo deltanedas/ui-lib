@@ -160,14 +160,16 @@ ui.addButton = (name, icon, clicked, user) => {
 			const cell = ui.areas.buttons.table.button(icon, Styles.clearTransi, 47.2, ()=>{});
 			cell.name(name);
 			const button = cell.get();
-			button.clicked(() => {
-				/* UI crashes are only printed to stdout, not a crash log */
-				try {
-					clicked(button);
-				} catch (e) {
-					ui.showError("Error when clicking button " + name, e);
-				}
-			});
+			if (clicked) {
+				button.clicked(() => {
+					/* UI crashes are only printed to stdout, not a crash log */
+					try {
+						clicked(button);
+					} catch (e) {
+						ui.showError("Error when clicking button " + name, e);
+					}
+				});
+			}
 			if (user) user(cell);
 		} catch (e) {
 			ui.showError("Failed to add button " + name, e);
