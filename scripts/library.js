@@ -298,6 +298,10 @@ ui.mobileAreaInput = (area, accepted, params) => {
 		If a function, the name of a button will be the return value of it.
 		Value is values[i] and i is the button index in the list. */
 ui.select = (title, values, selector, names) => {
+	if (values instanceof Seq) {
+		values = values.toArray();
+	}
+
 	if (!names) names = values;
 	if (typeof(names) != "function") {
 		const arr = names;
