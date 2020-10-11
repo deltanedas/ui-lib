@@ -30,7 +30,7 @@ ui.addArea("buttons", {
 		buttons.top().left();
 		// Be obviously modded
 		buttons.defaults().size(45).left();
-		buttons.visibility = () => Vars.ui.hudfrag.shown;
+		buttons.visibility = () => Vars.ui.hudfrag.shown && !Vars.ui.minimapfrag.shown();
 	},
 
 	post(buttons) {
