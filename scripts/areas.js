@@ -27,17 +27,37 @@ if (typeof(cons) == "undefined") {
 // To the right of the wave info / mobile buttons
 ui.addArea("buttons", {
 	init(buttons) {
-		// 5 buttons in vanilla mobile, same width as the wave fragment
-		// float HudFragment#dsize = 65f;
-		buttons.top().left().marginLeft(65 * 5 + 4);
+		buttons.top().left();
 		// Be obviously modded
 		buttons.defaults().size(45).left();
+		buttons.visibility = () => Vars.ui.hudfrag.shown;
 	},
 
 	post(buttons) {
 		// Not sure why this is needed
 		Core.app.post(() => {
-			buttons.marginLeft(65 * 5 + 4);
+			// 5 buttons in vanilla mobile, same width as the wave fragment
+			// float HudFragment#dsize = 65f;
+			if (Vars.mobile) {
+				buttons.marginLeft(Vars.mobile ? 65 * 5 + 4 : 0);
+			} else {
+				const info = Core.scene.find("fps/ping");
+				info.update(() => {
+					if (!Vars.state.rules.waves) {
+						info.translation.y = -Scl.scl(45 + 4);
+					}
+				});
+
+				const waves = Core.scene.find("waves");
+				waves.update(() => {
+					waves.translation.y = -Scl.scl(45 + 4);
+				});
+
+				const teams = Core.scene.find("teams");
+				teams.update(() => {
+					teams.translation.y = -Scl.scl(45 + 4);
+				});
+			}
 		});
 
 		// Edges around buttons
