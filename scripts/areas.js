@@ -15,7 +15,7 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const ui = this.global.uiLib;
+const ui = this.global.ui;
 
 // Sometimes being explicit about types is needed
 if (typeof(cons) == "undefined") {
@@ -28,21 +28,29 @@ if (typeof(cons) == "undefined") {
 ui.addArea("buttons", {
 	init(buttons) {
 		// 5 buttons in vanilla mobile, same width as the wave fragment
-		// float HudFragment#dsize = 47.2f;
-		buttons.top().left().marginLeft(47.2 * 5 + 4);
-		buttons.defaults().size(47.2).left();
+		// float HudFragment#dsize = 65f;
+		buttons.top().left().marginLeft(65 * 5 + 4);
+		// Be obviously modded
+		buttons.defaults().size(45).left();
 	},
 
 	post(buttons) {
+		// Not sure why this is needed
+		Core.app.post(() => {
+			buttons.marginLeft(65 * 5 + 4);
+		});
+
 		// Edges around buttons
 		const count = buttons.cells.size;
 		if (count == 0) return;
 
-		buttons.image().color(Pal.gray).width(4).fillY();
+		buttons.image().color(Pal.gray).width(4).fillY()
+			.get().touchable = Touchable.disabled;;
 		buttons.row();
 		// Position it after the first button because it gets "caught" on the second
-		const bottom = new Table().marginLeft(47.2 * count - 43.2).top();
-		bottom.image().color(Pal.gray).size(47.2 * count + 4, 4).right();
+		const bottom = new Table().marginLeft(45 * count - 41).top();
+		bottom.touchable = Touchable.disabled;
+		bottom.image().color(Pal.gray).size(45 * count + 4, 4).right();
 		buttons.add(bottom);
 	}
 });
@@ -50,8 +58,7 @@ ui.addArea("buttons", {
 // Under the FPS counter.
 ui.addArea("top", {
 	init(top) {
-		top.top().left().marginTop(47.2 + 54).marginLeft(47.2 * 5 + 16);
-		top.round = false;
+		top.top().left().marginTop(65 + 54).marginLeft(65 * 5 + 16);
 		top.defaults().top().left().padBottom(8);
 	},
 	post(top) {},
@@ -75,7 +82,7 @@ ui.addArea("top", {
 
 ui.addArea("side", {
 	init(side) {
-		const base = Vars.mobile ? 47.2 * 2 : 47.2;
+		const base = Vars.mobile ? 65 * 2 : 65;
 		const mtop = base + 130 + 8;
 		side.top().left().marginTop(mtop).marginLeft(8);
 		side.defaults().top().left().padBottom(8);
@@ -174,7 +181,7 @@ ui.addArea("menu", {
 		}));
 	},
 
-	customGroup: true,
+	group: null,
 
 	dialog: null
 });

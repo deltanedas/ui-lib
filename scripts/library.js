@@ -53,12 +53,8 @@ ui.load = () => {
 		ui.areas[i].init(table);
 	}
 
-	const events = ui.loadEvents;
 	ui.loaded = true;
-	for (var i in events) {
-		events[i]();
-	}
-	// Don't call events multiple times when mods reload
+	for (var e of ui.loadEvents) e();
 	ui.loadEvents = [];
 
 	var area;
@@ -72,8 +68,8 @@ ui.load = () => {
 
 		area.post(area.table);
 		// Add the UI elements to the HUD by default
-		if (!area.customGroup) {
-			Vars.ui.hudGroup.addChild(area.table);
+		if (area.group !== null) {
+			(area.group || Vars.ui.hudGroup).addChild(area.table);
 		}
 	}
 };
@@ -157,7 +153,7 @@ ui.addButton = (name, icon, clicked, user) => {
 	ui.onLoad(() => {
 		try {
 			icon = ui.getIcon(icon);
-			const cell = ui.areas.buttons.table.button(icon, Styles.clearTransi, 47.2, ()=>{});
+			const cell = ui.areas.buttons.table.button(icon, Styles.clearTransi, 45, ()=>{});
 			cell.name(name);
 			const button = cell.get();
 			if (clicked) {
@@ -315,4 +311,4 @@ ui.select = (title, values, selector, names) => {
 }
 
 module.exports = ui;
-this.global.uiLib = ui;
+this.global.ui = ui;

@@ -15,7 +15,7 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const ui = this.global.uiLib;
+const ui = this.global.ui;
 
 const world = new Vec2();
 
