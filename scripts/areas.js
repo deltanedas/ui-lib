@@ -34,6 +34,10 @@ ui.addArea("buttons", {
 	},
 
 	post(buttons) {
+		// Edges around buttons
+		const count = buttons.cells.size;
+		if (count == 0) return;
+
 		// Not sure why this is needed
 		Core.app.post(() => {
 			// 5 buttons in vanilla mobile, same width as the wave fragment
@@ -59,10 +63,6 @@ ui.addArea("buttons", {
 				});
 			}
 		});
-
-		// Edges around buttons
-		const count = buttons.cells.size;
-		if (count == 0) return;
 
 		buttons.image().color(Pal.gray).width(4).fillY()
 			.get().touchable = Touchable.disabled;;
