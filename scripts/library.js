@@ -268,8 +268,7 @@ ui.mobileAreaInput = (area, accepted, params) => {
 			const input = new Input.TextInput;
 			input.multiline = true;
 			input.accepted = text => {
-				// TextArea had its carriage return and linefeed keys switched
-				area.text = text.replace(/\n/g, "\r");
+				area.text = text;
 				accepted(text);
 			};
 			Object.assign(input, params(area));
