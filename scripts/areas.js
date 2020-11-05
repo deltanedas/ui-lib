@@ -68,9 +68,9 @@ ui.addArea("buttons", {
 			.get().touchable = Touchable.disabled;;
 		buttons.row();
 		// Position it after the first button because it gets "caught" on the second
-		const bottom = new Table().marginLeft(45 * count - 41).top();
+		const bottom = new Table().marginLeft(45 * (count - 1)).top();
 		bottom.touchable = Touchable.disabled;
-		bottom.image().color(Pal.gray).size(45 * count + 4, 4).right();
+		bottom.image().color(Pal.gray).size(45 * count + 8, 4).right();
 		buttons.add(bottom);
 	}
 });
