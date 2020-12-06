@@ -52,10 +52,10 @@ ui.addArea("buttons", {
 		});
 
 		/* Add edges around the buttons */
-		buttons.image(Styles.black8).width(4).fillY()
+		buttons.image().color(Pal.gray).width(4).fillY()
 			.get().touchable = Touchable.disabled;
 		buttons.row();
-		buttons.image(Styles.black8).size(45 * count + 4, 4).left()
+		buttons.image().color(Pal.gray).size(45 * count + 4, 4).left()
 			.colspan(buttons.columns).get().touchable = Touchable.disabled;
 	}
 });
