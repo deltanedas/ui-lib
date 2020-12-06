@@ -42,36 +42,21 @@ ui.addArea("buttons", {
 		Core.app.post(() => {
 			// 5 buttons in vanilla mobile, same width as the wave fragment
 			// float HudFragment#dsize = 65f;
-			if (Vars.mobile) {
-				buttons.marginLeft(Vars.mobile ? 65 * 5 + 4 : 0);
-			} else {
+			buttons.marginLeft(65 * 5 + 4);
+			if (!Vars.mobile) {
 				const info = Core.scene.find("fps/ping");
 				info.update(() => {
-					if (!Vars.state.rules.waves) {
-						info.translation.y = -Scl.scl(45 + 4);
-					}
-				});
-
-				const waves = Core.scene.find("waves");
-				waves.update(() => {
-					waves.translation.y = -Scl.scl(45 + 4);
-				});
-
-				const teams = Core.scene.find("teams");
-				teams.update(() => {
-					teams.translation.y = -Scl.scl(45 + 4);
+					info.translation.y = -Scl.scl(45 + 4);
 				});
 			}
 		});
 
-		buttons.image().color(Pal.gray).width(4).fillY()
-			.get().touchable = Touchable.disabled;;
+		/* Add edges around the buttons */
+		buttons.image(Styles.black8).width(4).fillY()
+			.get().touchable = Touchable.disabled;
 		buttons.row();
-		// Position it after the first button because it gets "caught" on the second
-		const bottom = new Table().marginLeft(45 * (count - 1)).top();
-		bottom.touchable = Touchable.disabled;
-		bottom.image().color(Pal.gray).size(45 * count + 8, 4).right();
-		buttons.add(bottom);
+		buttons.image(Styles.black8).size(45 * count + 4, 4).left()
+			.colspan(buttons.columns).get().touchable = Touchable.disabled;
 	}
 });
 
