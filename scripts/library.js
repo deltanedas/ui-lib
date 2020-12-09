@@ -310,4 +310,4 @@ ui.select = (title, values, selector, names) => {
 }
 
 module.exports = ui;
-this.global.ui = ui;
+global.ui = ui;

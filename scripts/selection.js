@@ -15,10 +15,10 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const ui = this.global.ui;
+const ui = global.ui;
 
 ui.onLoad(() => {
-	const dialog = extendContent(BaseDialog, "<title>", {
+	const dialog = extend(BaseDialog, "<title>", {
 		rebuild(title, values, selector, names) {
 			this.cont.clear();
 			this.title.text = title;

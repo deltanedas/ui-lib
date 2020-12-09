@@ -15,11 +15,11 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const ui = this.global.ui;
+const ui = global.ui;
 
 ui.onLoad(() => {
 	var error;
-	const dialog = extendContent(Dialog, "", {
+	const dialog = extend(Dialog, "", {
 		set(msg) {
 			error.text = msg;
 		}

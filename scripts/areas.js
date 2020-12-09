@@ -15,7 +15,7 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const ui = this.global.ui;
+const ui = global.ui;
 
 // Sometimes being explicit about types is needed
 if (typeof(cons) == "undefined") {
