@@ -5,5 +5,5 @@
 	"description": "Library for other mods that unifies and simplifies UI creation.",
 	"version": "2.16.6",
 	"hidden": true,
-	"minGameVersion": 108
+	"minGameVersion": 104.6
 }
