@@ -40,9 +40,11 @@ ui.addArea("buttons", {
 
 		// Not sure why this is needed
 		Core.app.post(() => {
-			// 5 buttons in vanilla mobile, same width as the wave fragment
-			// float HudFragment#dsize = 65f;
-			buttons.marginLeft(65 * 5 + 4);
+			// Dynamically set the margin to not overlap with the waves table
+			const waves = Core.scene.find("waves");
+			buttons.update(() => {
+				buttons.marginLeft(waves.getPrefWidth());
+			});
 			if (!Vars.mobile) {
 				const info = Core.scene.find("fps/ping");
 				info.update(() => {
