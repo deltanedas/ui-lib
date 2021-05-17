@@ -43,7 +43,7 @@ ui.addArea("buttons", {
 			// Dynamically set the margin to not overlap with the waves table
 			const waves = Core.scene.find("waves");
 			buttons.update(() => {
-				buttons.marginLeft(waves.getPrefWidth());
+				buttons.marginLeft(waves.getPrefWidth() / Scl.scl());
 			});
 			if (!Vars.mobile) {
 				const info = Core.scene.find("fps/ping");
