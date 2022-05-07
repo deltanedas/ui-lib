@@ -1,9 +1,9 @@
 {
 	"name": "ui-lib",
 	"displayName": "[#00aaff]UI Lib[]",
-	"author": "DeltaNedas",
+	"author": "deltanedas",
 	"description": "Library for other mods that unifies and simplifies UI creation.",
-	"version": "2.16.6",
+	"version": "3.16.6",
 	"hidden": true,
-	"minGameVersion": 108
+	"minGameVersion": 136
 }

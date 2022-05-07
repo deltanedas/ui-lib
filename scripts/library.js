@@ -153,7 +153,7 @@ ui.addButton = (name, icon, clicked, user) => {
 	ui.onLoad(() => {
 		try {
 			icon = ui.getIcon(icon);
-			const cell = ui.areas.buttons.table.button(icon, Styles.clearTransi, 45, ()=>{});
+			const cell = ui.areas.buttons.table.button(icon, Styles.cleari, 45, ()=>{});
 			cell.name(name);
 			const button = cell.get();
 			if (clicked) {
