@@ -89,12 +89,13 @@ ui.getIcon = (icon) => {
 	}
 	// Blocks.duo
 	if (icon instanceof UnlockableContent) {
-		icon = icon.icon(Cicon.full);
+		icon = icon.uiIcon;
 	}
 	// Core.atlas.find("error")
 	if (icon instanceof TextureRegion) {
 		icon = new TextureRegionDrawable(icon);
 	}
+
 	// Hopefully its a Drawable by now
 	return icon;
 };
