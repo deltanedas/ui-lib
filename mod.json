@@ -5,6 +5,6 @@
 	"description": "Library for other mods that unifies and simplifies UI creation.",
 	"version": "3.16.6",
 	"hidden": true,
-	"minGameVersion": 136,
+	"minGameVersion": 135.2,
 	"repo": "deltanedas/ui-lib"
 }
