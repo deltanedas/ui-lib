@@ -145,6 +145,12 @@ ui.addArea("menu", {
 	post() {},
 
 	buildDesktop(parent) {
+		if (parent.children.length() > 0) {
+			// try next tick
+			Core.app.post(() => buildDesktop(parent));
+			return;
+		}
+
 		// Basically clearMenut
 		const style = new TextButton.TextButtonStyle(Styles.cleart);
 		style.up = Tex.clear;
@@ -166,12 +172,10 @@ ui.addArea("menu", {
 			return;
 		}
 
-		// ClientLauncher has a 6-long post snek, one-up it.
-		Time.run(7, () => {
+		// ClientLauncher has a big post snek
+		this.buildDesktop(parent);
+		Events.on(ResizeEvent, () => {
 			this.buildDesktop(parent);
-			Events.on(ResizeEvent, () => {
-				this.buildDesktop(parent);
-			});
 		});
 	},
 
