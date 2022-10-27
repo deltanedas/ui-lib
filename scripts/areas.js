@@ -145,7 +145,7 @@ ui.addArea("menu", {
 	post() {},
 
 	buildDesktop(parent) {
-		if (parent.children.length() > 0) {
+		if (parent.children.length == 0) {
 			// try next tick
 			Core.app.post(() => buildDesktop(parent));
 			return;
