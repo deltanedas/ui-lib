@@ -145,7 +145,7 @@ ui.addArea("menu", {
 	post() {},
 
 	buildDesktop(parent) {
-		if (parent.children.length == 0) {
+		if (parent.children.get(1).cells.size == 0) {
 			// try next tick
 			Core.app.post(() => buildDesktop(parent));
 			return;
@@ -157,11 +157,15 @@ ui.addArea("menu", {
 		style.down = Styles.flatDown;
 
 		// menufrag.container's first table
-		const buttons = parent.children.get(1).cells.get(1).get();
+		const buttons = parent.children.get(1).cells.get(0);
 		/* Specialized version of menufrag.buttons(buttons, new Buttoni(...)) */
-		buttons.button("$ui.more", Icon.add, style, () => {
+		const cell = buttons.bottom().left();
+		const table = new Table();
+		table.fillParent = true;
+		table.button("$ui.more", Icon.add, style, () => {
 			this.dialog.show();
 		}).marginLeft(11);
+		cell.layout = table;
 	},
 
 	desktopButton(parent) {
