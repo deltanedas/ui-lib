@@ -3,8 +3,8 @@
 	"displayName": "[#00aaff]UI Lib[]",
 	"author": "deltanedas",
 	"description": "Library for other mods that unifies and simplifies UI creation.",
-	"version": "3.16.8",
+	"version": "4.18.0",
 	"hidden": true,
-	"minGameVersion": 136,
+	"minGameVersion": 139,
 	"repo": "deltanedas/ui-lib"
 }
