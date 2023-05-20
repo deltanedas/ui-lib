@@ -15,7 +15,7 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const ui = require("ui-lib/library");
+const ui = require("ui_lib/library");
 require("areas");
 require("effects");
 require("clicks");
