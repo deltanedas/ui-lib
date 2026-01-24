@@ -16,8 +16,10 @@
 */
 
 const ui = global.ui;
+const mat = new Mat();
 
 Events.run(Trigger.uiDrawBegin, () => {
+	mat.set(Draw.proj())
 	const w = Core.graphics.width, h = Core.graphics.height;
 
 	Draw.proj(Core.scene.camera);
@@ -30,4 +32,5 @@ Events.run(Trigger.uiDrawBegin, () => {
 	}
 
 	Draw.flush();
+	Draw.proj(mat);
 });
